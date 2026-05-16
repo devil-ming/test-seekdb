@@ -42,3 +42,7 @@ class BatchExporter:
     def export_to_list(self) -> list[list[float]]:
         """将索引中的所有向量导出为列表。"""
         return list(self._index._data)
+
+    def export_count(self) -> int:
+        """返回可导出的向量数量。"""
+        return self._index.count()
