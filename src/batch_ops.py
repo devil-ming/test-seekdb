@@ -31,3 +31,14 @@ class BatchImporter:
     @property
     def total_imported(self) -> int:
         return self._imported
+
+
+class BatchExporter:
+    """批量导出向量数据。"""
+
+    def __init__(self, index: VectorIndex):
+        self._index = index
+
+    def export_to_list(self) -> list[list[float]]:
+        """将索引中的所有向量导出为列表。"""
+        return list(self._index._data)
