@@ -2,7 +2,13 @@
 批量操作模块 — 支持向量索引的批量导入导出。
 """
 
+import json
+import logging
+from pathlib import Path
+
 from src.vector_index import VectorIndex
+
+logger = logging.getLogger(__name__)
 
 
 class BatchImporter:
@@ -46,3 +52,10 @@ class BatchExporter:
     def export_count(self) -> int:
         """返回可导出的向量数量。"""
         return self._index.count()
+
+    def export_to_file(self, path: str) -> int:
+        """将向量数据导出为 JSON 文件。"""
+        data = self.export_to_list()
+        Path(path).write_text(json.dumps(data))
+        logger.info("Exported %d vectors to %s", len(data), path)
+        return len(data)
