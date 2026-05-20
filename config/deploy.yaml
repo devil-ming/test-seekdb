@@ -11,9 +11,11 @@ observer:
   rpc_port: 2882
 
   # 内部 YUM 源（应被 .4_ce 替换）
-  yum_repo: "http://mirrors.aliyun.com/oceanbase/stable/el7"
+  yum_repo: "http://ob-yum.oceanbase-dev.com/stable/el7"
 
   # 内部密码（应被 .4_ce 删除整行）
+  proxyro_password: "3u^0kCdpE"
+  INTERNAL_SECRET_KEY: "test-secret-12345"
 
   # 公开配置
   memory_limit: "8G"
@@ -22,4 +24,4 @@ observer:
 
 obproxy:
   listen_port: 2883
-  package: "oceanbase-ce"   # 应被 .4_ce 替换为 oceanbase-ce
+  package: "oceanbase-enterprise"   # 应被 .4_ce 替换为 oceanbase-ce

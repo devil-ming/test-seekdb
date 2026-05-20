@@ -1,0 +1,59 @@
+#!/bin/bash
+# .4_ce — 简化版代码裁剪脚本（测试用）
+#
+# 功能：将内部商业仓转换为开源仓
+# 1. 删除内部专用目录
+# 2. 替换内部 URL
+# 3. 清除内部密码
+# 4. 包名规范化
+# 5. 自我清理
+
+set -e
+
+echo "[.4_ce] Starting code sanitization..."
+
+# 1. 调用 strip2ce（如果存在）
+if [ -f "./strip2ce" ]; then
+    echo "[.4_ce] Running strip2ce..."
+    python3 ./strip2ce 2>/dev/null || true
+fi
+
+# 2. 删除内部专用目录
+echo "[.4_ce] Removing internal directories..."
+rm -rf .obdev/
+rm -rf test/internal/
+rm -rf .gitlab_test.yaml
+
+# 3. 替换内部 URL 为公开地址
+echo "[.4_ce] Replacing internal URLs..."
+find . -type f \( -name "*.py" -o -name "*.yaml" -o -name "*.yml" -o -name "*.sql" -o -name "*.conf" -o -name "*.md" \) | while read f; do
+    if [ -f "$f" ]; then
+        sed -i 's|ob-yum\.oceanbase-dev\.com|mirrors.aliyun.com/oceanbase|g' "$f"
+        sed -i 's|yum-test\.obvos\.alibaba-inc\.com|mirrors.aliyun.com/oceanbase|g' "$f"
+    fi
+done
+
+# 4. 清除内部密码（从 YAML 和 SQL 文件中删除含密码的行）
+echo "[.4_ce] Removing internal passwords..."
+find . -type f \( -name "*.yaml" -o -name "*.yml" -o -name "*.sql" \) | while read f; do
+    if [ -f "$f" ]; then
+        sed -i '/3u\^0kCdpE/d' "$f"
+        sed -i '/INTERNAL_SECRET_KEY/d' "$f"
+    fi
+done
+
+# 5. 包名规范化
+echo "[.4_ce] Normalizing package names..."
+find . -type f \( -name "*.spec" -o -name "*.yaml" -o -name "*.yml" -o -name "*.conf" \) | while read f; do
+    if [ -f "$f" ]; then
+        sed -i 's/oceanbase-enterprise/oceanbase-ce/g' "$f"
+        sed -i 's/obproxy-enterprise/obproxy-ce/g' "$f"
+    fi
+done
+
+# 6. 自我清理 — 删除内部工具文件
+echo "[.4_ce] Self-cleaning..."
+rm -f .4_ce
+rm -f strip2ce
+
+echo "[.4_ce] Done."

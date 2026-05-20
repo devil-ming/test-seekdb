@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+"""strip2ce — 简化版编译产物裁剪脚本（测试用）
+
+在真实环境中，这个脚本会裁剪编译产物。
+测试版本仅做简单的文件清理。
+"""
+
+import os
+import glob
+
+# 删除 .pyc 文件和 __pycache__ 目录
+for root, dirs, files in os.walk('.'):
+    for d in dirs:
+        if d == '__pycache__':
+            full = os.path.join(root, d)
+            print(f"[strip2ce] Removing {full}")
+            import shutil
+            shutil.rmtree(full, ignore_errors=True)
+    for f in files:
+        if f.endswith('.pyc'):
+            full = os.path.join(root, f)
+            print(f"[strip2ce] Removing {full}")
+            os.remove(full)
+
+print("[strip2ce] Done.")

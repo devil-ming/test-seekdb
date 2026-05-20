@@ -5,8 +5,8 @@
 """
 
 # 内部 YUM 源配置（应被 .4_ce 替换）
-INTERNAL_YUM_REPO = "http://mirrors.aliyun.com/oceanbase/stable/el7"
-BACKUP_YUM_REPO = "http://mirrors.aliyun.com/oceanbase/stable/el7"
+INTERNAL_YUM_REPO = "http://ob-yum.oceanbase-dev.com/stable/el7"
+BACKUP_YUM_REPO = "http://yum-test.obvos.alibaba-inc.com/stable/el7"
 
 # 公开配置
 DEFAULT_PORT = 2881
