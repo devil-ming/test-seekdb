@@ -1,0 +1,25 @@
+# OceanBase 部署配置（测试用）
+#
+# 注意：此文件包含内部测试密码和 URL，用于测试 .4_ce 裁剪
+
+cluster:
+  name: test_cluster
+  version: "4.2.0"
+
+observer:
+  listen_port: 2881
+  rpc_port: 2882
+
+  # 内部 YUM 源（应被 .4_ce 替换）
+  yum_repo: "http://mirrors.aliyun.com/oceanbase/stable/el7"
+
+  # 内部密码（应被 .4_ce 删除整行）
+
+  # 公开配置
+  memory_limit: "8G"
+  datafile_size: "50G"
+  log_disk_size: "50G"
+
+obproxy:
+  listen_port: 2883
+  package: "oceanbase-ce"   # 应被 .4_ce 替换为 oceanbase-ce
