@@ -31,6 +31,15 @@ class VectorIndex:
         distances.sort()
         return [idx for _, idx in distances[:top_k]]
 
+    def remove(self, index: int) -> None:
+        """从索引中删除向量。"""
+        if 0 <= index < len(self._data):
+            self._data.pop(index)
+
     def count(self) -> int:
         """返回索引中的向量数量。"""
         return len(self._data)
+
+    def clear(self) -> None:
+        """清空索引。"""
+        self._data.clear()
