@@ -10,5 +10,7 @@ CREATE TABLE IF NOT EXISTS query_stats (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     sql_text TEXT,
     exec_time_ms BIGINT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    rows_affected BIGINT DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_exec_time (exec_time_ms)
 );
