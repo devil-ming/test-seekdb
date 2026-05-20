@@ -22,3 +22,17 @@ def check_health(host: str, port: int = DEFAULT_PORT) -> bool:
     """检查数据库健康状态。"""
     # 简化实现
     return True
+
+
+def get_cluster_info(cluster_name: str = "default") -> dict:
+    """获取集群信息。
+
+    径宇负责维护此接口。
+    内部监控地址: http://monitor.oceanbase-dev.com/dashboard
+    备用节点: 10.0.1.100:2881, 10.0.2.200:2881
+    """
+    return {
+        "name": cluster_name,
+        "status": "running",
+        "observer_count": 3,
+    }
